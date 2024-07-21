@@ -7,7 +7,7 @@
 using namespace std;
 /**
 *@class IAI: Interface de apresentação de investimentos
-*@brief Classe puramente abstrata que declara os métodos a serem implementados pelo módulo de apresentação de investimentos;
+*@brief Classe puramente abstrata que declara os métodos a serem implementados pelo módulo de apresentação de investimentos (Feita por: 231025190);
 **/
 class IAI {
 public:
@@ -88,7 +88,7 @@ public:
 
 /**
 *@class ISI: Interface de serviço de investimentos;
-*@brief Classe responsável por declarar os metodos que serão implementados pelo modulo de serviço de investimentos;
+*@brief Classe responsável por declarar os metodos que serão implementados pelo modulo de serviço de investimentos (Feita por: 231025190);
 */
 class ISI {
 public:
@@ -170,7 +170,7 @@ public:
 
 /**
 *@class IACC: Interface de criação de conta.
-*@brief Classe puramente abstrata que declara os métodos a serem implementados pelo módulo de criação de conta.
+*@brief Classe puramente abstrata que declara os métodos a serem implementados pelo módulo de criação de conta (Feita por: 231013529).
 **/
 class IACC {
 public:
@@ -203,7 +203,7 @@ public:
 
 /**
 *@class ISCC: Interface de serviço de criação de contas.
-*@brief Classe puramente abstrata responsével por salvar os dados informados no repositório de contas.
+*@brief Classe puramente abstrata responsével por salvar os dados informados no repositório de contas (Feita por: 231013529).
 **/
 class ISCC{
 public:
@@ -217,7 +217,7 @@ public:
 
 /**
 *@class IAGC: Interface de apresentação de gerenciamento de contas.
-*@brief Classe puramente abstrata responsével por dar ao usuário a possibilidade de: ler as informações da conta, atualizar essas informações, excluir a conta ou ir para a seção de investimentos.
+*@brief Classe puramente abstrata responsével por dar ao usuário a possibilidade de: ler as informações da conta, atualizar essas informações, excluir a conta ou ir para a seção de investimentos (Feita por: 231013529).
 **/
 class IAGC {
 public:
@@ -254,7 +254,7 @@ public:
 
 /**
 *@class ISGC: Interface de serviço de gerenciamento de contas.
-*@brief Classe puramente abstrata responsével por, dada a escolha do usuário, buscar as informações da conta no repositório das contas, alterar um ou ambos os dados, ou excluir a conta.
+*@brief Classe puramente abstrata responsével por, dada a escolha do usuário, buscar as informações da conta no repositório das contas, alterar um ou ambos os dados, ou excluir a conta (Feita por: 231013529).
 **/
 class ISGC {
 public:
@@ -283,5 +283,53 @@ public:
     *@return true se foi possivel excluir, false caso contrário.
     */
     virtual bool excluir_cs() = 0;
+};
+
+
+/**
+ * @class IAA
+ * @brief Interface de Apresentação Autenticadora (Feita por: 231036292).
+ */
+class IAA {
+public:
+    /**
+     * @brief Solicita o CPF do usuário.
+     * @param cpf
+     * @return true se o CPF for válido, false caso contrário.
+     */
+    virtual void getCPF(string) = 0;
+
+    /**
+     * @brief Solicita a sanha do usuário.
+     * @param senha
+     * @return true se a senha for válida, false caso contrário.
+     */
+    virtual void getSenha(string) = 0;
+
+    /**
+    * @brief Metodo puramente abstrato responsavel por retirar o usuário da interface.
+    */
+    virtual void sair_autenticacao() = 0;
+};
+
+/**
+ * @class ISA
+ * @brief Interface de Serviço de Autenticação (Feita por: 231036292).
+ */
+class ISA {
+public:
+    /**
+     * @brief Busca CPF no repositório de Contas.
+     * @param cpf.
+     * @return true se o cpf está no repoitório de contas, false caso contrário.
+     */
+    virtual bool busca_CPF(string) = 0;
+
+    /**
+     * @brief Verifica se senha é corespondente com o CPF digitado.
+     * @param cpf.
+     * @return true se a autenticação for bem-sucedida, falso caso contrário.
+     */
+    virtual bool verifica_senha(string) = 0;
 };
 #endif // INTERFACES_H_INCLUDED
