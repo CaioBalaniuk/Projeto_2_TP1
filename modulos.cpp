@@ -1,4 +1,7 @@
 #include <iostream>
+#include "modulos.h"
+#include "dominios.h"
+#include "entidades.h"
 #include <vector>
 #include <stdexcept>
 #include <tuple>
@@ -8,20 +11,7 @@
 
 using namespace std;
 
-class MACC : public IACC {
-private:
-    string cpf_rep;
-    string nome_rep;
-    string senha_rep;
-
-public:
-    bool informa_cpf(string) override;
-    bool informa_nome(string) override;
-    bool informa_senha(string) override;
-    void sair_criacao() override;
-    void executar();
-};
-
+//Implementação do Módulo de Apresentação de Criação de Conta
 bool MACC::informa_cpf(string cpf){
     try{
         CPF* ponteiro_cpf = new CPF();
@@ -56,21 +46,21 @@ void MACC::executar(){
     cout << "Informe seu CPF:" << endl;
     cin << cpf_rep << endl;
     while (informa_cpf(cpf_rep) == false) {
-        cout << "O CPF n�o est� no formato v�lido." << endl;
+        cout << "O CPF não está no formato válido." << endl;
         cout << "Informe seu CPF:" << endl;
         cin << cpf_rep << endl;
     }
 
     RC repositorio;
     if (cpf_rep == repositorio.buscar(cpf_rep)){
-        cout << "A conta com o CPF " << cpf_rep << "j� existe." << endl;
+        cout << "A conta com o CPF " << cpf_rep << "já existe." << endl;
         sair_criacao();
 
     } else {
         cout << "Informe seu Nome:" << endl;
         cin << nome_rep << endl;
         while (informa_nome(nome_rep) == false) {
-            cout << "O Nome n�o est� no formato v�lido." << endl;
+            cout << "O Nome não está no formato válido." << endl;
             cout << "Informe seu Nome:" << endl;
             cin << nome_rep << endl;
         }
