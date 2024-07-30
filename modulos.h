@@ -11,8 +11,9 @@ private:
 public:
     bool informa_cpf(string) override;
     bool informa_nome(string) override;
+    bool informa_senha(string) override;
     void sair_criacao() override;
-    void executar();
+    void executar() override;
 };
 
 
