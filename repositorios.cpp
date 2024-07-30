@@ -297,7 +297,7 @@ void RT::adicionar(string cpf, string info) {
     ofstream arqu("repositorio_t.txt", ios::app);
     if (arqu.is_open()) {
         arqu<<cpf;
-        arqu<<":";
+        arqu<<";";
         arqu<<info<<"\n";
         arqu.close();
     }
@@ -319,13 +319,11 @@ string RT::listar_tsr(string cpf) {
             break;
         }
     }
-    finale = split(li + ':', ':');
+    finale = split(li + ';', ';');
+    finale.erase(finale.begin());
     for (string k : finale) {
-        string dale = k.substr(0,3);
-        if (dale == "CRA"||dale == "CDB"||dale == "CRI"||dale == "LCA"||dale == "LCI"||dale == "DEB") {
-            fim += k;
-            fim += " ";
-        }
+        fim += k.substr(0,11);
+        fim += " ";
     }
     ar.close();
     if (fim == "") {
@@ -335,7 +333,7 @@ string RT::listar_tsr(string cpf) {
     }
 }
 
-void RT::add_linha_exist(string cpf, string inf) {
+void RT::add_titulo(string cpf, string inf) {
     ifstream arqu("repositorio_t.txt");
     string l;
     string apoi;
@@ -354,7 +352,7 @@ void RT::add_linha_exist(string cpf, string inf) {
         }
         cont +=1;
     }
-    ls[cont] += ":";
+    ls[cont] += ";";
     ls[cont] += inf;
     ofstream arquivo("repositorio_t.txt");
     for (string k1 : ls) {
@@ -388,7 +386,7 @@ void RT::excluir(string cpf) {
     arq.close();
 }
 
-void RT::excluir_linha_exist(string cpf, string info) {
+void RT::excluir_titulo(string cpf, string codigo_t) {
     ifstream arquivo ("repositorio_t.txt");
     string linha;
     string apoio;
@@ -403,14 +401,14 @@ void RT::excluir_linha_exist(string cpf, string info) {
     for (string i : linhas) {
         apoio = i.substr(0,14);
         if (apoio == cpf) {
-            need = split(i + ':',':');
+            need = split(i + ';',';');
             break;
         }
         cont += 1;
     }
     int contador = 0;
     for (string i1 : need) {
-        if (i1 == info) {
+        if (i1.substr(0,11) == codigo_t) {
             need.erase(need.begin() + contador);
             break;
         }
@@ -421,60 +419,7 @@ void RT::excluir_linha_exist(string cpf, string info) {
         if (linha == "") {
             linha += i2;
         } else {
-            linha += ":";
-            linha += i2;
-        }
-    }
-    int c = 0;
-    for (string i3 : linhas) {
-        if (c == cont) {
-            finale.push_back(linha);
-        } else {
-            finale.push_back(i3);
-        }
-        c +=1;
-    }
-    ofstream arq ("repositorio_t.txt");
-    for (string i4 : finale) {
-        arq<<i4<<endl;
-    }
-    arq.close();
-}
-
-void RT::atualizar(string cpf, string info_a, string info_n) {
-    fstream arquivo ("repositorio_t.txt");
-    string linha;
-    string apoio;
-    vector<string> linhas;
-    vector<string> need;
-    vector<string> finale;
-    while (getline(arquivo,linha)) {
-        linhas.push_back(linha);
-    }
-    arquivo.close();
-    int cont = 0;
-    for (string i : linhas) {
-        apoio = i.substr(0,14);
-        if (apoio == cpf) {
-            need = split(i + ':',':');
-            break;
-        }
-        cont += 1;
-    }
-    int contador = 0;
-    for (string i1 : need) {
-        if (i1 == info_a) {
-            need[contador] = info_n;
-            break;
-        }
-        contador += 1;
-    }
-    linha = "";
-    for (string i2 : need) {
-        if (linha == "") {
-            linha += i2;
-        } else {
-            linha += ":";
+            linha += ";";
             linha += i2;
         }
     }
@@ -511,28 +456,86 @@ string RT::ler_tr(string cpf, string codigo_t) {
             break;
         }
     }
-    finale = split(li + ':', ':');
+    finale = split(li + ';', ';');
+    finale.erase(finale.begin());
     for (string k : finale) {
-        if (k == codigo_t) {
-            break;
-        }
-        cont1 += 1;
-    }
-    vector<string> fu;
-    cont2 = finale.size() - 1;
-    for (int f = cont1 + 1; f <= cont2; f++) {
-        fu.push_back(finale[f]);
-    }
-    fim += finale[cont1];
-    for (string k1 : fu) {
-        string fuc = k1.substr(0,3);
-        if (fuc=="CRA"||fuc == "CDB"||fuc == "CRI"||fuc == "LCA"||fuc == "LCI"||fuc == "DEB") {
-            break;
-        } else {
-            fim += " ";
-            fim += k1;
+        if (k.substr(0,11) == codigo_t) {
+            fim = k;
         }
     }
+    ar.close();
     return fim;
 }
 
+void RT::atualizar(string cpf, string codigo_t, string info_a, string info_n) {
+    fstream arquivo ("repositorio_t.txt");
+    string linha;
+    string apoio;
+    vector<string> linhas;
+    vector<string> need;
+    vector<string> finale;
+    while (getline(arquivo,linha)) {
+        linhas.push_back(linha);
+    }
+    arquivo.close();
+    int cont = 0;
+    for (string i : linhas) {
+        apoio = i.substr(0,14);
+        if (apoio == cpf) {
+            need = split(i + ';',';');
+            break;
+        }
+        cont += 1;
+    }
+    int contador = 0;
+    int co = 0;
+    vector<string> aaa;
+    for (string i1 : need) {
+        if (i1.substr(0,11) == codigo_t) {
+            aaa = split(i1 + ' ', ' ');
+            for (string i4 : aaa) {
+                if (i4 == info_a) {
+                    aaa[contador] = info_n;
+                    break;
+                }
+                contador += 1;
+            }
+           break;
+        }
+        co += 1;
+    }
+
+    string linhaa = "";
+    for (string i5 : aaa) {
+        if (linhaa == "") {
+            linhaa += i5;
+        } else {
+            linhaa += " ";
+            linhaa += i5;
+        }
+    }
+    need[co] = linhaa;
+    linha = "";
+    for (string i2 : need) {
+        if (linha == "") {
+            linha += i2;
+        } else {
+            linha += ";";
+            linha += i2;
+        }
+    }
+    int c = 0;
+    for (string i3 : linhas) {
+        if (c == cont) {
+            finale.push_back(linha);
+        } else {
+            finale.push_back(i3);
+        }
+        c +=1;
+    }
+    ofstream arq ("repositorio_t.txt");
+    for (string i4 : finale) {
+        arq<<i4<<endl;
+    }
+    arq.close();
+}
