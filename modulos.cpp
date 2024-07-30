@@ -42,6 +42,11 @@ bool MACC::informa_senha(string senha){
     }
 }
 
+void MACC::sair_criacao(){
+    
+
+}
+
 void MACC::executar(){
     cout << "Informe seu CPF:" << endl;
     cin << cpf_rep << endl;
@@ -51,8 +56,8 @@ void MACC::executar(){
         cin << cpf_rep << endl;
     }
 
-    RC repositorio;
-    if (cpf_rep == repositorio.buscar(cpf_rep)){
+    RC repositorio_c;
+    if (cpf_rep == repositorio_c.buscar(cpf_rep)){
         cout << "A conta com o CPF " << cpf_rep << "já existe." << endl;
         sair_criacao();
 
@@ -67,14 +72,19 @@ void MACC::executar(){
 
         cout << "Informe sua Senha:" << endl;
         cin << senha_rep << endl;
+        while (informa_senha(senha_rep) == false) {
+            cout << "A Senha não está no formato válido." << endl;
+            cout << "Informe sua Senha:" << endl;
+            cin << senha_rep << endl;
+        }
 
         cout << "Conta criada com Sucesso !!!"
 
-        RC.adicionar(cpf_rep, nome_rep);
-        RC.add_linha_exist(cpf_rep, senha_rep);
+        sair_criacao();
     }
 
 }
+
 
 
 
