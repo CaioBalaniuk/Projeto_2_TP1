@@ -26,10 +26,10 @@ public:
     void start();
     void adicionar(string, string);
     string listar_tsr(string);
-    void add_linha_exist(string, string);
+    void add_titulo(string, string);
     void excluir(string);
-    void excluir_linha_exist(string,string);
-    void atualizar (string, string, string);
+    void excluir_titulo(string,string);
+    void atualizar (string, string, string, string);
     string ler_tr(string, string);
 };
 
