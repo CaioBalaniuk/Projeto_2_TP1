@@ -189,13 +189,6 @@ public:
     virtual bool informa_nome(string) = 0;
     
     /**
-    * @brief Metodo puramente abstrato responsavel por receber a senha e, depois, por passar para a nova conta a ser criada.
-    * @param senha
-    * @return true se a senha for válida, false caso contrário.
-    */
-    virtual bool informa_senha(string) = 0;
-    
-    /**
     * @brief Metodo puramente abstrato responsavel por retirar o usuário da interface.
     */
     virtual void sair_criacao() = 0;
