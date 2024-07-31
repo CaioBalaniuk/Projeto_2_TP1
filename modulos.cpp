@@ -94,5 +94,51 @@ void MSCC::salvar_dados(string cpf, string nome, string senha){
 } 
 
 
+//Implementação do Módulo de Serviço de Gerenciamento de Conta
+string MSGC::ler_cs(string cpf){
+    RC repositorio;
+    repositorio.start();
+    repositorio.ler_c(cpf)
+}
+
+bool MSGC::alterar_senha(string cpf, string senha_nova){
+    try{
+        Senha* ponteiro_senha = new Senha();
+        ponteiro_senha->setSenha(senha_nova);
+        
+        RC repositorio;
+        repositorio.start();
+        string original = repositorio.ler_c(cpf);
+        string velha = original.substr(original.length() - 6, 6);
+        
+        repositorio.atualizar_c(cpf, velha, senha_nova);
+
+    } catch(const invalid_argument& e){
+        return false;
+    }
+}
+
+bool MSGC::alterar_nome(string cpf, string nome_novo){
+    try{
+        Nome* ponteiro_nome = new Nome();
+        ponteiro_nome->setNome(nome_novo);
+        
+        RC repositorio;
+        repositorio.start();
+        string original = repositorio.ler_c(cpf);
+        string velha = original.substr(0, original.length() - 6);
+        
+        repositorio.atualizar_c(cpf, velha, nome_novo);
+
+    } catch(const invalid_argument& e){
+        return false;
+    }
+}
+
+void MSGC::excluir_cs(string cpf){
+    RC repositorio;
+    repositorio.start();
+    repositorio.excluir_c(cpf);
+}
 
 
