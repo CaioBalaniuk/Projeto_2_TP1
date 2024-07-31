@@ -266,29 +266,32 @@ class ISGC {
 public:
     /**
     *@brief Metodo puramente abstrato responsavel por buscar as informações da conta e retorna-las para a camada de apresentação;
-    *@return vetor com todas as informações da conta.
+    *@return string contendo o nome e a senha associados ao cpf.
+    *@param cpf.
     */
-    virtual vector<string> ler_cs() = 0;
+    virtual string ler_cs(string) = 0;
     
     /**
     *@brief Metodo puramente abstrato responsavel por alterar a senha.
     *@return true se foi possivel a alteração, false caso contrário.
+    *@param cpf.
     *@param senha atualizada.
     */
-    virtual bool alterar_senha(string) = 0;
+    virtual bool alterar_senha(string, string) = 0;
     
     /**
     *@brief Metodo puramente abstrato responsavel por alterar o nome.
     *@return true se foi possivel a alteração, false caso contrário.
+    *@param cpf.
     *@param nome atualizado.
     */
-    virtual bool alterar_nome(string) = 0;
+    virtual bool alterar_nome(string, string) = 0;
     
     /**
     *@brief Metodo puramente abstrato responsavel por excluir a conta.
-    *@return true se foi possivel excluir, false caso contrário.
+    *@param cpf.
     */
-    virtual bool excluir_cs() = 0;
+    virtual void excluir_cs(string) = 0;
 };
 
 
