@@ -23,5 +23,14 @@ public:
     void salvar_dados(string, string, string) override;
 };
 
+//Declaração do Módulo de Serviço de Gerenciamento de Conta
+class MSGC : public ISGC {
+public:
+    string ler_cs(string) override;
+    bool alterar_senha(string, string) override;
+    bool aterar_nome(string, string) override;
+    void excluir_cs(string) override;
+
+};
 
 #endif // MODULOS_H_INCLUDED
