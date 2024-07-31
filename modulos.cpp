@@ -2,6 +2,7 @@
 #include "modulos.h"
 #include "dominios.h"
 #include "entidades.h"
+#include "repositorios.h"
 #include <vector>
 #include <stdexcept>
 #include <tuple>
