@@ -33,6 +33,19 @@ public:
     string ler_tr(string, string);
 };
 
+class RC {
+private:
+    vector<string> repositorio;
+    vector<string> split(string, char);
+public:
+    void start(); 
+    void adicionar_c(string, string); 
+    void add_linha_exist(string, string); 
+    string ler_c(string);
+    void excluir_c(string); 
+    void atualizar_c (string, string, string); 
+};
+
 
 
 #endif // REPOSITORIOS_H_INCLUDED
