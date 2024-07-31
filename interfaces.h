@@ -214,10 +214,11 @@ class ISCC{
 public:
     /**
     *@brief Metodo puramente abstrato responsavel por salvar a nova conta com suas informações no repositorio de contas.
-    *@return true se foi possivel salvar a conta, false caso contrário.
-    *@param Conta a ser salva.
+    *@param cpf.
+    *@param nome.
+    *@param senha.
     */
-    virtual bool salvar_dados(Conta) = 0;
+    virtual void salvar_dados(string, string, string) = 0;
 };
 
 /**
