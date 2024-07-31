@@ -42,11 +42,6 @@ bool MACC::informa_senha(string senha){
     }
 }
 
-void MACC::sair_criacao(){
-    
-
-}
-
 void MACC::executar(){
     cout << "Informe seu CPF:" << endl;
     cin << cpf_rep << endl;
@@ -77,6 +72,8 @@ void MACC::executar(){
             cout << "Informe sua Senha:" << endl;
             cin << senha_rep << endl;
         }
+        
+        mscc->salvar_dados(cpf_rep, nome_rep, senha_rep);
 
         cout << "Conta criada com Sucesso !!!"
 
@@ -84,6 +81,15 @@ void MACC::executar(){
     }
 
 }
+
+
+//Implementação do Módulo de Serviço de Criação de Conta
+void MSCC::salvar_dados(string cpf, string nome, string senha){
+    RC repositorio;
+    repositorio.start();
+    repositorio.adicionar(cpf, nome);
+    repositorio.add_linha_exist(cpf, senha);
+} 
 
 
 
