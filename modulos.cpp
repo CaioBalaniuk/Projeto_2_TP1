@@ -51,8 +51,10 @@ void MACC::executar(){
         cin << cpf_rep << endl;
     }
 
-    RC repositorio_c;
-    if (cpf_rep == repositorio_c.buscar(cpf_rep)){
+    RC repositorio_cont;
+    repositorio_cont.start();
+    
+    if (repositorio_cont.ler_c() != "Linha nao encontrada"){
         cout << "A conta com o CPF " << cpf_rep << "já existe." << endl;
         sair_criacao();
 
@@ -87,7 +89,7 @@ void MACC::executar(){
 void MSCC::salvar_dados(string cpf, string nome, string senha){
     RC repositorio;
     repositorio.start();
-    repositorio.adicionar(cpf, nome);
+    repositorio.adicionar_c(cpf, nome);
     repositorio.add_linha_exist(cpf, senha);
 } 
 
