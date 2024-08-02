@@ -263,7 +263,7 @@ bool MSI::excluir_ps(string codigo_t, int codigo_p) {
     return juri;
 }
 ///////////////////////////////////////////////////////////////////////////////////////
-//implementação Modulo apresentação investimentos
+//Implementação metodos Modulo de apresentação de investimentos
 string MAI::listar_t() {
     string cpf;
     cout<<"Digite seu CPF: "<<endl;
@@ -560,5 +560,92 @@ void MAI::executar() {
     }
 
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Implementação metodos Modulo de serviço de autenticação
+bool MSA::busca_CPF(string cpf) {
+    string apoio = repositorio->ler_c(cpf);
+    if (apoio == "Linha nao encontrada") {
+        return false;
+    } else {
+        return true;
+    }
+}
 
+bool MSA::verifica_senha(string cpf, string senha) {
+    return repositorio->verificar_senha(cpf,senha);
+}
+////////////////////////////////////////////////////////
+//Implementação metodos Modulo de apresentação de autenticação
+
+void MAA::getCPF() {
+    cout << "Digite seu CPF: ";
+    cin >> cpf;
+}
+
+void MAA::getSenha() {
+    cout << "Digite sua senha: ";
+    cin >> senha;
+}
+
+void MAA::sair_autenticacao() {
+    cout << "Saindo da autenticacao." << endl;
+}
+
+string MAA::getCpf() const {
+    return cpf;
+}
+
+string MAA::getSenha() const {
+    return senha;
+}
+
+void MAA::autenticar() {
+    getCPF();
+    if (servicoAutenticacao->busca_CPF(cpf)) {
+        getSenha();
+        if (servicoAutenticacao->verifica_senha(cpf, senha)) {
+            cout << "Autenticacao bem-sucedida." << endl;
+        } else {
+            cout << "Senha incorreta." << endl;
+        }
+    } else {
+        cout << "CPF nao encontrado." << endl;
+    }
+}
+
+void MAA::executar() {
+    bool juri = true;
+    string apoio;
+    int acao;
+    while (juri) {
+        cout<<"Selecione o numero da acao que deseja realizar."<<endl;
+        cout<<"1. Autenticar"<<endl;
+        cout<<"2. Sair"<<endl;
+        cin>>acao;
+        cout<<endl;
+        switch(acao) {
+            case 1:
+                autenticar();
+                cout<<endl;
+                cout<<"Escolha o que quer fazer agora"<<endl;
+                cout<<"1. Ir para gerenciamento de contas"<<endl;
+                cout<<"2. Voltar para o inicio"<<endl;
+                int op;
+                cin>>op;
+                if (op == 2) {
+                    sair_autenticacao();
+                    juri = false;
+                }
+                break;
+            case 2:
+                sair_autenticacao();
+                cout<<endl;
+                juri = false;
+                break;
+            default:
+                cout<<"Isso nao e uma acao valida."<<endl;
+                break;
+        }
+    }
+}
 
