@@ -652,7 +652,7 @@ string RC::ler_c(string cpf) {
         ap = li.substr(0,14);
         if (ap == cpf) {
             ar.close();
-            return li.substr(14,-1);
+            return li.substr(15,-1);
         }
     }
     ar.close();
@@ -735,4 +735,20 @@ void RC::atualizar_c(string cpf, string info_a, string info_n) {
         arq<<i4<<endl;
     }
     arq.close();
+}
+
+bool RC::verificar_senha(string cpf, string senha) {
+    string comp;
+    string apoio = ler_c(cpf);
+    vector<string> apoio1 = split(apoio + ' ', ' ');
+    comp = apoio1[1];
+    if (comp[0] != '1' && comp[0] != '2' && comp[0] != '3' &&comp[0] != '4' &&comp[0] != '5' &&comp[0] != '6' &&comp[0] != '7' &&comp[0] != '8' &&comp[0] != '9') {
+        comp = apoio1[2];
+    }
+    if (comp == senha) {
+        return true;
+    } else {
+        return false;
+    }
+
 }
