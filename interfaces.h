@@ -298,14 +298,14 @@ public:
      * @param cpf
      * @return true se o CPF for válido, false caso contrário.
      */
-    virtual void getCPF(string) = 0;
+    virtual void getCPF() = 0;
 
     /**
      * @brief Solicita a sanha do usuário.
      * @param senha
      * @return true se a senha for válida, false caso contrário.
      */
-    virtual void getSenha(string) = 0;
+    virtual void getSenha() = 0;
 
     /**
     * @brief Metodo puramente abstrato responsavel por retirar o usuário da interface.
@@ -331,7 +331,6 @@ public:
      * @param cpf.
      * @return true se a autenticação for bem-sucedida, falso caso contrário.
      */
-    virtual bool verifica_senha(string) = 0;
-};
+    virtual bool verifica_senha(string,string) = 0;
 };
 #endif // INTERFACES_H_INCLUDED
