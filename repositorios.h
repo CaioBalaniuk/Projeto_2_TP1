@@ -44,6 +44,7 @@ public:
     string ler_c(string);
     void excluir_c(string);
     void atualizar_c (string, string, string);
+    bool verificar_senha(string,string);
 };
 
 
