@@ -13,8 +13,8 @@ public:
     string listar_psr(string);
     void add_pagamento(string, string);
     void excluir(string);
-    void excluir_linha_exist(string,string);
-    void atualizar (string, string, string);
+    void excluir_pag(string,int);
+    void atualizar (string, int, string, string);
     string ler_pr(string, string);
 };
 
@@ -38,14 +38,13 @@ private:
     vector<string> repositorio;
     vector<string> split(string, char);
 public:
-    void start(); 
-    void adicionar_c(string, string); 
-    void add_linha_exist(string, string); 
+    void start();
+    void adicionar_c(string, string);
+    void add_linha_exist(string, string);
     string ler_c(string);
-    void excluir_c(string); 
-    void atualizar_c (string, string, string); 
+    void excluir_c(string);
+    void atualizar_c (string, string, string);
 };
-
 
 
 #endif // REPOSITORIOS_H_INCLUDED
