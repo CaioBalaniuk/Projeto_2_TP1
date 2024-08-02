@@ -38,6 +38,8 @@ void RP::start() {
 }
 
 void RP::adicionar(string codigo_t, string info) {
+    vector<string> apoio = split(info + ' ', ' ');
+    apoio[2] += "%";
     ofstream arqu("repositorio_p.txt", ios::app);
     if (arqu.is_open()) {
         arqu<<codigo_t;
@@ -45,7 +47,6 @@ void RP::adicionar(string codigo_t, string info) {
         arqu<<info<<"\n";
         arqu.close();
     }
-    repositorio_p.push_back(codigo_t);
 }
 
 string RP::listar_psr(string codigo_t) {
@@ -82,6 +83,8 @@ void RP::add_pagamento(string codigo_t, string inf) {
     string l;
     string apoi;
     vector<string> ls;
+    vector<string> apoio = split(inf + ' ', ' ');
+    apoio[2] += "%";
     if (arqu.is_open()) {
         while (getline(arqu, l)) {
             ls.push_back(l);
@@ -130,7 +133,7 @@ void RP::excluir(string codigo_t) {
     arq.close();
 }
 
-void RP::excluir_linha_exist(string codigo_t, string info) {
+void RP::excluir_pag(string codigo_t, int codigo_p) {
     ifstream arquivo ("repositorio_p.txt");
     string linha;
     string apoio;
@@ -145,14 +148,15 @@ void RP::excluir_linha_exist(string codigo_t, string info) {
     for (string i : linhas) {
         apoio = i.substr(0,11);
         if (apoio == codigo_t) {
-            need = split(i + ' ',' ');
+            need = split(i + ';',';');
             break;
         }
         cont += 1;
     }
     int contador = 0;
     for (string i1 : need) {
-        if (i1 == info) {
+        string a = i1.substr(0,8);
+        if (a == to_string(codigo_p)) {
             need.erase(need.begin() + contador);
             break;
         }
@@ -163,7 +167,7 @@ void RP::excluir_linha_exist(string codigo_t, string info) {
         if (linha == "") {
             linha += i2;
         } else {
-            linha += " ";
+            linha += ";";
             linha += i2;
         }
     }
@@ -183,7 +187,7 @@ void RP::excluir_linha_exist(string codigo_t, string info) {
     arq.close();
 }
 
-void RP::atualizar(string codigo_t, string info_a, string info_n) {
+void RP::atualizar(string codigo_t, int codigo_p, string info_aa, string info_nn) {
     fstream arquivo ("repositorio_p.txt");
     string linha;
     string apoio;
@@ -198,25 +202,46 @@ void RP::atualizar(string codigo_t, string info_a, string info_n) {
     for (string i : linhas) {
         apoio = i.substr(0,11);
         if (apoio == codigo_t) {
-            need = split(i + ' ',' ');
+            need = split(i + ';',';');
             break;
         }
         cont += 1;
     }
+    vector<string> aaa;
+    string codigo = to_string(codigo_p);
     int contador = 0;
+    int co = 0;
     for (string i1 : need) {
-        if (i1 == info_a) {
-            need[contador] = info_n;
+        string aa = i1.substr(0,8);
+        if (aa == codigo) {
+            aaa = split(i1 + ' ', ' ');
+            for (string i5 : aaa) {
+                if (i5 == info_aa) {
+                    aaa[co] = info_nn;
+                    break;
+                }
+                co += 1;
+            }
             break;
         }
         contador += 1;
     }
+    string linhaa = "";
+    for (string i6 : aaa) {
+        if (linhaa == "") {
+            linhaa += i6;
+        } else {
+            linhaa += " ";
+            linhaa += i6;
+        }
+    }
+    need[contador] = linhaa;
     linha = "";
     for (string i2 : need) {
         if (linha == "") {
             linha += i2;
         } else {
-            linha += " ";
+            linha += ";";
             linha += i2;
         }
     }
@@ -254,13 +279,16 @@ string RP::ler_pr(string codigo_t, string codigo_p) {
     finale = split(li + ';', ';');
     finale.erase(finale.begin());
     for (string i : finale) {
-
         if (i.substr(0,8) == codigo_p) {
             fim += i;
         }
     }
     ar.close();
-    return fim;
+    if (fim == "") {
+        return "Pagamento nao encontrado";
+    } else {
+        return fim;
+    }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 vector<string> RT::split(string s, char d) {
@@ -301,7 +329,6 @@ void RT::adicionar(string cpf, string info) {
         arqu<<info<<"\n";
         arqu.close();
     }
-    repositorio.push_back(cpf);
 }
 
 string RT::listar_tsr(string cpf) {
@@ -464,7 +491,11 @@ string RT::ler_tr(string cpf, string codigo_t) {
         }
     }
     ar.close();
-    return fim;
+    if (fim == "") {
+        return "Titulo nao encontrado";
+    } else {
+        return fim;
+    }
 }
 
 void RT::atualizar(string cpf, string codigo_t, string info_a, string info_n) {
@@ -539,8 +570,7 @@ void RT::atualizar(string cpf, string codigo_t, string info_a, string info_n) {
     }
     arq.close();
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 vector<string> RC::split(string s, char d) {
     vector<string> resp;
     int cont = 0;
