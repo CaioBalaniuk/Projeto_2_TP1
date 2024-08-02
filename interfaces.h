@@ -1,6 +1,7 @@
 #ifndef INTERFACES_H_INCLUDED
 #define INTERFACES_H_INCLUDED
 #include "entidades.h"
+#include "entidades.cpp"
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -13,77 +14,68 @@ class IAI {
 public:
     /**
     *@brief Metodo puramente abstrato que será responsável por imprimir todos os titulos da conta;
+    *@return Retorna uma string com o cpf do usuario, para ser usado em outros metodos.
     */
-    virtual void listar_t() = 0;
+    virtual string listar_t() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber e, depois, passar as informações de um novo titulo a ser criado;
-    *@return True se foi possivel criar o titulo, False se ocorreu alguma falha;
-    *@param codigo titulo
-    *@param nome de quem emitiu
-    *@param setor
-    *@param data de emissão
-    *@param data de vencimento
-    *@param valor
     */
-    virtual bool criar_t(string, string, string, string, string, float) = 0;
+    virtual void criar_t() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber um codigo titulo e passa-lo para a camada de serviço, para, depois,
     *imprimir suas informações;
-    *@param codigo titulo
     */
-    virtual void ler_t(string) = 0;
+    virtual void ler_t() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber um codigo titulo e passar quais informações serão alteradas desse titulo
     * para a camada de serviço.
-    *@param codigo titulo
     */
-    virtual void atualizar_t(string) = 0;
+    virtual void atualizar_t() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber um codigo titulo e passa-lo para a camada de serviço, que o excluíra;
-    *@return True se foi possível excluir o titulo, False se ocorreu algum erro.
-    *@param codigo titulo
     */
-    virtual bool excluir_t(string) = 0;
+    virtual void excluir_t() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber um codigo titulo e , depois, imprimir todos os pagamentos desse titulo;
-    *@param codigo titulo
     */
-    virtual void listar_p(string) = 0;
+    virtual void listar_p() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por criar um novo pagamento e passar as informações para a camada de serviço salvar;
-    *@return True se foi possivel a criação do pagamento, False se ocorreu algum erro;
-    *@param codigo titulo no qual sera criado o pagamento
-    *@param codigo pagamento
-    *@param data do pagamento
-    *@param percentual
-    *@param estado
     */
-    virtual bool criar_p(string, int, string, int, string) = 0;
+    virtual void criar_p() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber um codigo pagamento e depois imprimir as informações do mesmo;
-    *@param codigo pagamento
+    *@return Retorna um vetor de strings contendo o codigo de titulo e codigo de pagamento para serem usados por outros metodos
+    * se necessario.
     */
-    virtual void ler_p(int) = 0;
+    virtual vector<string> ler_p() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber um codigo pagamento e passar as informações a serem alteradas do pagamento;
-    *@param codigo pagamento
     */
-    virtual void atualizar_p(int) = 0;
+    virtual void atualizar_p() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber um codigo pagamento e passa-lo para a camada de serviço exclui-lo;
-    *@return True se foi possivel excluir o pagamento, False se ocorreu algum erro;
-    *@param codigo pagamento
     */
-    virtual bool excluir_p(int) = 0;
+    virtual void excluir_p() = 0;
+
+    /**
+    *@brief Metodo puramente abstrato responsavel por inicializar as funcionalidades da classe.
+    */
+    virtual void executar() = 0;
+
+    /**
+    *@brief Metodo puramente abstrato responsavel por sair da interface.
+    */
+    virtual void sair() = 0;
 };
 
 /**
@@ -96,35 +88,35 @@ public:
     *@brief Metodo puramente abstrato responsavel por buscar todos os titulos da conta e retorna-los para a camada de apresentação;
     *@return vetor com todos os titulos e seus respectivos codigos;
     */
-    virtual vector<string> listar_ts() = 0;
+    virtual string listar_ts(string) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por salvar um novo titulo com suas informações, no repositorio de investimentos;
     *@return True se foi possivel salvar o titulo, False se ocorreu algum erro;
     *@param Titulo a ser salvo;
     */
-    virtual bool salvar_dados_t(Titulo) = 0;
+    virtual bool salvar_dados_t(Titulo*) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por buscar as informações de certo titulo e retorna-las para a camada de apresentação;
     *@return vetor com todas as informações do titulo
     *@param codigo do titulo a ser lido;
     */
-    virtual vector<string> ler_ts(string) = 0;
+    virtual string ler_ts(string,string) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por alterar os novos dados de determinado titulo;
     *@return True se foi possivel a alteração, False se ocorreu algum erro;
     *@param codigo do titulo a ser alterado;
     */
-    virtual bool atualizar_dados_t(string) = 0;
+    virtual bool atualizar_dados_t(string,string,string,string) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por excluir determinado titulo do repositorio;
     *@return True se foi possivel excluir, False se ocorreu algum erro;
     *@param Codigo do titulo a ser excluido;
     */
-    virtual bool excluir_ts(string) = 0;
+    virtual bool excluir_ts(string,string) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por buscar os pagamentos, de determinado titulo, e depois retorna-los
@@ -132,7 +124,7 @@ public:
     *@return vetor com todos os pagamentos do determinado titulo;
     *@param Codigo do titulo no qual serão lidos os pagamentos;
     */
-    virtual vector<int> listar_ps(string) = 0;
+    virtual string listar_ps(string) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por salvar um novo pagamento no repositorio de investimentos;
@@ -140,7 +132,7 @@ public:
     *@param codigo do titulo no qual o pagamento será salvo;
     *@param Pagamento a ser salvo;
     */
-    virtual bool salvar_dados_p(string, Pagamento) = 0;
+    virtual bool salvar_dados_p(Pagamento*) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por buscar as informações do pagamento determinado e retorna-las para
@@ -149,14 +141,14 @@ public:
     *@param Codigo do titulo no qual o pagamento determinado se encontra;
     *@param codigo do pagamento determinado
     */
-    virtual vector<string> ler_ps(string, int) = 0;
+    virtual string ler_ps(string, int) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por alterar os dados determinados de um pagamento também determinado;
     *@return True se foi possivel a alteração, False se ocorreu algum erro;
     *@param Codigo do Pagamento a ser alterado;
     */
-    virtual bool atualizar_dados_p(int) = 0;
+    virtual bool atualizar_dados_p(string, int, string, string) = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por excluir determinado pagamento do repositorio de investimentos;
@@ -180,7 +172,7 @@ public:
     * @return true se o CPF for válido, false caso contrário.
     */
     virtual bool informa_cpf(string) = 0;
-    
+
     /**
     * @brief Metodo puramente abstrato responsavel por receber o nome e, depois, por passar para a nova conta a ser criada.
     * @param nome
@@ -232,7 +224,7 @@ public:
     *imprimir as informações da conta.
     */
     virtual void ler_c() = 0;
-    
+
     /**
     *@brief Metodo puramente abstrato responsavel por receber um nome e uma senha e, depois, passar as informações que serão alteradas da conta
     * para a camada de serviço.
@@ -240,18 +232,18 @@ public:
     *@param senha.
     */
     virtual void atualizar_c(string, string) = 0;
-    
+
     /**
     *@brief Metodo puramente abstrato responsavel por receber um cpf e passa-lo para a camada de serviço, que excluíra a conta.
     *@return true se foi possível excluir a conta, false caso contrário.
     */
     virtual bool excluir_c() = 0;
-    
+
     /**
     *@brief Metodo puramente abstrato responsavel por levar o usuário a seção de investimentos.
     */
     virtual void ir_invest() = 0;
-    
+
     /**
     * @brief Metodo puramente abstrato responsavel por retirar o usuário da interface.
     */
@@ -270,7 +262,7 @@ public:
     *@param cpf.
     */
     virtual string ler_cs(string) = 0;
-    
+
     /**
     *@brief Metodo puramente abstrato responsavel por alterar a senha.
     *@return true se foi possivel a alteração, false caso contrário.
@@ -278,7 +270,7 @@ public:
     *@param senha atualizada.
     */
     virtual bool alterar_senha(string, string) = 0;
-    
+
     /**
     *@brief Metodo puramente abstrato responsavel por alterar o nome.
     *@return true se foi possivel a alteração, false caso contrário.
@@ -286,7 +278,7 @@ public:
     *@param nome atualizado.
     */
     virtual bool alterar_nome(string, string) = 0;
-    
+
     /**
     *@brief Metodo puramente abstrato responsavel por excluir a conta.
     *@param cpf.
@@ -340,5 +332,6 @@ public:
      * @return true se a autenticação for bem-sucedida, falso caso contrário.
      */
     virtual bool verifica_senha(string) = 0;
+};
 };
 #endif // INTERFACES_H_INCLUDED
