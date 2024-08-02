@@ -1,6 +1,6 @@
 #include <iostream>
 #include "dominios.h"
-#include <string>
+#include <cmath>
 #include <map>
 #include <stdexcept>
 #include <sstream>
@@ -11,8 +11,8 @@ string alfabeto=("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 
 //Metodos classe CodigoPagamento
-CodigoPagamento::CodigoPagamento(int b=0){
-    codigo=b;
+CodigoPagamento::CodigoPagamento(){
+   codigo=0;
 };
 
 void CodigoPagamento::setCodigoP(int a){
@@ -38,6 +38,7 @@ CodigoTitulo::CodigoTitulo(string a=" "){
 void CodigoTitulo::setCodigoT(string b){
     bool juri =true;
     int contador;
+    apoio = "";
     apoio+=b[0];
     apoio+=b[1];           //apoio é uma string que possui os 3 primeiros caracteres do codigo a fim de tornar mais facil a checagem
     apoio+=b[2];
@@ -448,7 +449,13 @@ Setor::Setor(string a=" "){
 }
 
 void Setor::setSetor(string consultadearea) {
-        if (consultadearea == "Agricultura" || consultadearea == "Construção civil" || consultadearea == "Energia" || consultadearea == "Finanças" || consultadearea == "Imobiliário" || consultadearea == "Papel e celulose" || consultadearea == "Pecuária" || consultadearea == "Química e petroquímica" || consultadearea == "Metalurgia e siderurgia" || consultadearea == "Mineração") {
+        if (consultadearea == "Agricultura" || consultadearea == "Construcao civil" || consultadearea == "Energia"){
+            area = consultadearea;
+        } else if (consultadearea == "Financas" || consultadearea == "Imobiliario" || consultadearea == "Papel e celulose") {
+            area = consultadearea;
+        } else if (consultadearea == "Pecuaria" || consultadearea == "Quimica e petroquimica") {
+            area = consultadearea;
+        } else if (consultadearea == "Metalurgia e siderurgia" || consultadearea == "Mineracao") {
             area = consultadearea;
         } else {
             throw invalid_argument("Setor invalido.");
@@ -485,7 +492,7 @@ Dinheiro::Dinheiro(){
 
 void Dinheiro::setDinheiro(float $) {
         if ($ >= 0 && $ <= 1000000) {  // o if verifica se o valor está dentro do intervalo permitido (0 a 1000000) e atribui o valor se estiver dentro do intervalo
-            valor = $;
+            valor = floor($*100)/100;
         } else {
             throw invalid_argument("Dinheiro invalido.");
         }
