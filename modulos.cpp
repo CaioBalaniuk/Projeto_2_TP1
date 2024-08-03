@@ -94,6 +94,84 @@ void MSCC::salvar_dados(string cpf, string nome, string senha){
     repositorio.add_linha_exist(cpf, senha);
 } 
 
+//Implementação do Módulo de Apresentação de Gerenciamento de Conta
+void MAGC::set_CPF(string cpf){
+    cpf_rep = cpf;
+}
+
+void MAGC::ler_c(){
+    msgc->ler_cs(cpf_rep);
+}
+
+void MAGC::atualizar_c(){
+    int valor;
+    cout << "Digite 1 para alterar o nome e digite 2 para alterar a senha: " << endl;
+    cin >> valor;
+    while (valor!= 1 && valor!= 2){
+        cout << "Digite 1 para alterar o nome e digite 2 para alterar a senha: " << endl;
+        cin >> valor;
+    }
+    if (valor==1){
+        string novo_nome;
+        cout << "Informe o novo nome:" << endl;
+        cin >> novo_nome;
+        while (msgc->alterar_nome(cpf_rep, novo_nome)== false){
+            cout << "Informe um nome no formato valido:"
+            cin >> novo_nome;
+        }
+        cout << "Nome alterado com sucesso";
+    }
+    
+    if (valor == 2) {
+        string novo_senha;
+        cout << "Informe a nova senha:" << endl;
+        cin >> novo_senha;
+        while (msgc->alterar_senha(cpf_rep, novo_senha)== false){
+            cout << "Informe uma senha no formato valido:"
+            cin >> novo_senha;
+        }
+        cout << "Senha alterada com sucesso";
+    }
+}
+
+void MAGC::excluir_c(){
+    msgc->excluir_cs(cpf_rep);
+    cout << "Conta excluida com sucesso." << endl;
+}
+
+void MAGC::ir_invest(){
+    mai -> executar();
+}
+
+void MAGC::sair_gerenConta(){
+    maa -> executar();
+}
+
+void MAGC::executar(){
+    int valor;
+    cout << "Digite:" << endl;
+    cout << "1) Para ler os dados da conta." << endl;
+    cout << "2) Para atualizar dados da conta." << endl;
+    cout << "3) Para excluir a conta." << endl;
+    cout << "4) Para ir a parte de investimentos." << endl;
+    cout << "5) Para sair da parte de gerenciamento de conta." << endl;
+    cin >> valor;
+    if (valor == 1) {
+        ler_c();
+    } else if (valor == 2){
+        atualizar_c();
+    } else if (valor == 3){
+        excluir_c();
+    } else if (valor == 4){
+        ir_invest();
+    } else if (valor == 5) {
+        sair_gerenConta();
+    } else {
+        cout << "Valor digitado eh invalido." << endl;
+        cout << "Voce esta sendo direcionado para fora do Gerenciamento de Conta" << endl;
+        sair_gerenConta();
+    }
+}
 
 //Implementação do Módulo de Serviço de Gerenciamento de Conta
 string MSGC::ler_cs(string cpf){
