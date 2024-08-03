@@ -43,6 +43,10 @@ bool MACC::informa_senha(string senha){
     }
 }
 
+void MACC::sair_criacao(){
+    maa->executar();
+}
+
 void MACC::executar(){
     cout << "Informe seu CPF:" << endl;
     cin << cpf_rep << endl;
