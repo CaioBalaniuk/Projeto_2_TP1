@@ -8,6 +8,7 @@
 class MACC : public IACC {
 private:
     MSCC* mscc;
+    MAA* maa;
     string cpf_rep;
     string nome_rep;
     string senha_rep;
