@@ -26,6 +26,24 @@ public:
     void salvar_dados(string, string, string) override;
 };
 
+//Declaração do Módulo de Apresentação de Gerenciamento de Conta
+class MAGC : public IAGC {
+private:
+    MSGC* msgc = new MSGC;
+    MAI* mai = new MAI;
+    MAA* maa = new MAA;
+    string cpf_rep;
+    
+public:
+    void set_CPF(string);
+    void ler_c() override;
+    void atualizar_c() override;
+    void excluir_c() override;
+    void ir_invest() override;
+    void sair_gerenConta() override;
+    void executar() override;
+};
+
 //Declaração do Módulo de Serviço de Gerenciamento de Conta
 class MSGC : public ISGC {
 public:
