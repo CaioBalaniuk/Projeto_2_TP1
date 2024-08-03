@@ -7,8 +7,8 @@
 //Declaração do Módulo de Apresentação de Criação de Conta
 class MACC : public IACC {
 private:
-    MSCC* mscc;
-    MAA* maa;
+    MSCC* mscc = new MSCC;
+    MAA* maa = new MAA;
     string cpf_rep;
     string nome_rep;
     string senha_rep;
