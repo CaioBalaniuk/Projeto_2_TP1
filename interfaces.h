@@ -228,16 +228,13 @@ public:
     /**
     *@brief Metodo puramente abstrato responsavel por receber um nome e uma senha e, depois, passar as informações que serão alteradas da conta
     * para a camada de serviço.
-    *@param nome.
-    *@param senha.
     */
-    virtual void atualizar_c(string, string) = 0;
+    virtual void atualizar_c() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por receber um cpf e passa-lo para a camada de serviço, que excluíra a conta.
-    *@return true se foi possível excluir a conta, false caso contrário.
     */
-    virtual bool excluir_c() = 0;
+    virtual void excluir_c() = 0;
 
     /**
     *@brief Metodo puramente abstrato responsavel por levar o usuário a seção de investimentos.
@@ -248,6 +245,11 @@ public:
     * @brief Metodo puramente abstrato responsavel por retirar o usuário da interface.
     */
     virtual void sair_gerenConta() = 0;
+
+    /**
+    * @brief Metodo puramente abstrato responsavel por inicializar as operações na interface.
+    */
+    virtual void executar() = 0;
 };
 
 /**
