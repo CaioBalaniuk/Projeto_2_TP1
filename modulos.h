@@ -4,93 +4,11 @@
 #include<string>
 #include "interfaces.h"
 #include "repositorios.h"
-//Declaração do Módulo de Apresentação de Criação de Conta
-class MACC : public IACC {
-private:
-    MSCC* mscc = new MSCC;
-    MAA* maa = new MAA;
-    string cpf_rep;
-    string nome_rep;
-    string senha_rep;
+using namespace std;
 
-public:
-    bool informa_cpf(string) override;
-    bool informa_nome(string) override;
-    bool informa_senha(string) override;
-    void sair_criacao() override;
-    void executar() override;
-};
+class MAI;
+class MAGC;
 
-//Declaração do Módulo de Serviço de Criação de Conta
-class MSCC : public ISCC {
-public:
-    void salvar_dados(string, string, string) override;
-};
-
-//Declaração do Módulo de Apresentação de Gerenciamento de Conta
-class MAGC : public IAGC {
-private:
-    MSGC* msgc = new MSGC;
-    MAI* mai = new MAI;
-    MAA* maa = new MAA;
-    string cpf_rep;
-    
-public:
-    void set_CPF(string);
-    void ler_c() override;
-    void atualizar_c() override;
-    void excluir_c() override;
-    void ir_invest() override;
-    void sair_gerenConta() override;
-    void executar() override;
-};
-
-//Declaração do Módulo de Serviço de Gerenciamento de Conta
-class MSGC : public ISGC {
-public:
-    string ler_cs(string) override;
-    bool alterar_senha(string, string) override;
-    bool aterar_nome(string, string) override;
-    void excluir_cs(string) override;
-
-};
-
-////////////////////////////////////////////////////////////////////////////////////////
-//Declaração Modulo de serviço de investimentos
-class MSI : public ISI {
-private:
-    RP *repositorio_p;
-    RT *repositorio_t;
-public:
-    string listar_ts(string) override;
-    bool salvar_dados_t(Titulo*) override;
-    string ler_ts(string,string) override;
-    bool atualizar_dados_t(string,string,string,string) override;
-    bool excluir_ts(string,string) override;
-    string listar_ps(string) override;
-    bool salvar_dados_p(Pagamento*) override;
-    string ler_ps(string, int) override;
-    bool atualizar_dados_p(string, int, string, string) override;
-    bool excluir_ps(string, int) override;
-};
-//Declaração Modulo de apresentação de investimentos
-class MAI : public IAI {
-private:
-    MSI* servico = new MSI;
-public:
-    string listar_t () override;
-    void criar_t() override;
-    void ler_t() override;
-    void atualizar_t() override;
-    void excluir_t() override;
-    void listar_p() override;
-    void criar_p() override;
-    vector<string> ler_p() override;
-    void atualizar_p() override;
-    void excluir_p() override;
-    void executar() override;
-    void sair() override;
-};
 
 /**
  * @class MSA
@@ -132,8 +50,11 @@ private:
     string cpf;  /**< CPF do usuário */
     string senha; /**< Senha do usuário */
     MSA *servicoAutenticacao = new MSA;/**< Ponteiro para o serviço de autenticação */
+    MAGC* gerenciar_c;
 
 public:
+
+    void definir_g(MAGC);
     /**
      * @brief Solicita o CPF do usuário.
      */
@@ -164,13 +85,110 @@ public:
     /**
      * @brief Inicia o processo de autenticação.
      */
-    void autenticar();
+    bool autenticar();
 
     /**
     *@brief Executa as funcionalidades da classe
     */
     void executar();
 };
+
+
+
+
+
+class MSI : public ISI {
+private:
+    RP *repositorio_p;
+    RT *repositorio_t;
+public:
+    string listar_ts(string) override;
+    bool salvar_dados_t(Titulo*) override;
+    string ler_ts(string,string) override;
+    bool atualizar_dados_t(string,string,string,string) override;
+    bool excluir_ts(string,string) override;
+    string listar_ps(string) override;
+    bool salvar_dados_p(Pagamento*) override;
+    string ler_ps(string, int) override;
+    bool atualizar_dados_p(string, int, string, string) override;
+    bool excluir_ps(string, int) override;
+    void excluir_g(string);
+};
+
+class MAI : public IAI {
+private:
+    MSI* servico = new MSI;
+    MAGC* magc;
+    string cpf;
+public:
+    void listar_t () override;
+    void criar_t() override;
+    void ler_t() override;
+    void atualizar_t() override;
+    void excluir_t() override;
+    void listar_p() override;
+    void criar_p() override;
+    vector<string> ler_p() override;
+    void atualizar_p() override;
+    void excluir_p() override;
+    void executar() override;
+    void sair() override;
+    void passar_cpf(string);
+    void excluir_geral(string);
+};
+
+//Declaração do Módulo de Serviço de Criação de Conta
+class MSCC : public ISCC {
+public:
+    void salvar_dados(string, string, string) override;
+};
+
+class MACC : public IACC {
+private:
+    MSCC* mscc = new MSCC;
+    MAA* maa = new MAA;
+    string cpf_rep;
+    string nome_rep;
+    string senha_rep;
+
+public:
+    bool informa_cpf(string) override;
+    bool informa_nome(string) override;
+    bool informa_senha(string) override;
+    void sair_criacao() override;
+    void executar() override;
+};
+
+//Declaração do Módulo de Serviço de Gerenciamento de Conta
+class MSGC : public ISGC {
+public:
+    string ler_cs(string) override;
+    bool alterar_senha(string, string) override;
+    bool alterar_nome(string, string) override;
+    void excluir_cs(string) override;
+
+};
+
+//Declaração do Módulo de Apresentação de Gerenciamento de Conta
+class MAGC : public IAGC {
+private:
+    MSGC* msgc = new MSGC;
+    MAI* mai = new MAI;
+    MAA* maa = new MAA;
+    string cpf_rep;
+
+public:
+    void set_CPF(string);
+    void ler_c() override;
+    void atualizar_c() override;
+    void excluir_c() override;
+    void ir_invest() override;
+    void sair_gerenConta() override;
+    void executar() override;
+    void definir_i(MAI);
+    void definir_a(MAA);
+};
+
 
 
 #endif // MODULOS_H_INCLUDED
