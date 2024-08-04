@@ -21,8 +21,8 @@ public:
 class RT {
 private:
     vector<string> repositorio;
-    vector<string> split(string, char);
 public:
+    vector<string> split(string, char);
     void start();
     void adicionar(string, string);
     string listar_tsr(string);
@@ -43,8 +43,9 @@ public:
     void add_linha_exist(string, string);
     string ler_c(string);
     void excluir_c(string);
-    void atualizar_c (string, string, string);
+    void atualizar_senha (string, string, string);
     bool verificar_senha(string,string);
+    void atualizar_nome(string, string,string);
 };
 
 
