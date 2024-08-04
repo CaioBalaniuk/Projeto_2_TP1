@@ -684,7 +684,7 @@ void RC::excluir_c(string cpf) {
     arq.close();
 }
 
-void RC::atualizar_c(string cpf, string info_a, string info_n) {
+void RC::atualizar_senha(string cpf, string info_a, string info_n) {
     fstream arquivo ("repositorio_c.txt");
     string linha;
     string apoio;
@@ -750,5 +750,66 @@ bool RC::verificar_senha(string cpf, string senha) {
     } else {
         return false;
     }
+
+}
+
+void RC::atualizar_nome(string cpf, string info_a, string info_n) {
+    fstream arquivo ("repositorio_c.txt");
+    string linha;
+    string apoio;
+    vector<string> linhas;
+    vector<string> need;
+    vector<string> finale;
+    vector<string> n;
+    while (getline(arquivo,linha)) {
+        linhas.push_back(linha);
+    }
+    arquivo.close();
+    int cont = 0;
+    for (string i : linhas) {
+        apoio = i.substr(0,14);
+        if (apoio == cpf) {
+            need = split(i + ' ',' ');
+            break;
+        }
+        cont += 1;
+    }
+    apoio = "";
+    apoio += need[1];
+    apoio += " ";
+    apoio += need[2];
+    need[1] = apoio;
+    need.erase(need.begin() + 2);
+    int contador = 0;
+    for (string i1 : need) {
+        if (i1 == info_a) {
+            need[contador] = info_n;
+            break;
+        }
+        contador += 1;
+    }
+    linha = "";
+    for (string i2 : need) {
+        if (linha == "") {
+            linha += i2;
+        } else {
+            linha += " ";
+            linha += i2;
+        }
+    }
+    int c = 0;
+    for (string i3 : linhas) {
+        if (c == cont) {
+            finale.push_back(linha);
+        } else {
+            finale.push_back(i3);
+        }
+        c +=1;
+    }
+    ofstream arq ("repositorio_c.txt");
+    for (string i4 : finale) {
+        arq<<i4<<endl;
+    }
+    arq.close();
 
 }
